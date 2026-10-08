@@ -264,6 +264,53 @@ th{
 
 
   <!-- WEEKLY SUMMARY -->
+  <!-- ADD / UPDATE DAY -->
+<div class="card">
+
+  <div class="section-title">Add / update day</div>
+
+  <div class="row">
+
+    <div>
+      <div class="small">Date</div>
+      <input id="manualDate" type="date">
+    </div>
+
+    <div>
+      <div class="small">Break (minutes)</div>
+      <input id="manualBreak" type="number" min="0" step="1" value="0">
+    </div>
+
+  </div>
+
+  <div class="row" style="margin-top:10px">
+
+    <div>
+      <div class="small">Clock in</div>
+      <input id="manualStart" type="time">
+    </div>
+
+    <div>
+      <div class="small">Clock out</div>
+      <input id="manualFinish" type="time">
+    </div>
+
+  </div>
+
+  <button
+    class="secondary"
+    style="width:100%;margin-top:12px"
+    onclick="addManualDay()">
+    Add / update day
+  </button>
+
+  <p class="small">
+    Use this if you forgot to start the timer.
+    The break is deducted from the total worked time.
+    If the date already has a record, it will be replaced.
+  </p>
+
+</div>
   <div class="card">
 
     <div class="section-title">
@@ -778,6 +825,20 @@ function render(){
 
 
   /* HISTORY */
+  /* MANUAL ENTRY DEFAULTS */
+
+const manualDate =
+  document.getElementById('manualDate');
+
+if(
+  manualDate &&
+  !manualDate.value
+){
+
+  manualDate.value=key;
+
+}
+
 
   const rows=
     Object.keys(
@@ -961,6 +1022,100 @@ function finishWork(){
 
 
 /* EDIT */
+  /* ADD / UPDATE A DAY MANUALLY */
+
+function addManualDay(){
+
+  const date =
+    document.getElementById('manualDate').value;
+
+  const start =
+    document.getElementById('manualStart').value;
+
+  const finish =
+    document.getElementById('manualFinish').value;
+
+  const breakMin =
+    Math.max(
+      0,
+      Number(
+        document.getElementById('manualBreak').value || 0
+      )
+    );
+
+  if(!date || !start || !finish){
+
+    toast('Please enter date, start and finish');
+
+    return;
+
+  }
+
+  const startParts =
+    start.split(':').map(Number);
+
+  const finishParts =
+    finish.split(':').map(Number);
+
+  const sh=startParts[0];
+  const sm=startParts[1];
+
+  const fh=finishParts[0];
+  const fm=finishParts[1];
+
+  if(
+    sh>23 || fh>23 ||
+    sm>59 || fm>59
+  ){
+
+    toast('Invalid time');
+
+    return;
+
+  }
+
+  let minutes =
+    (fh*60+fm) -
+    (sh*60+sm);
+
+  if(minutes<0)
+    minutes += 1440;
+
+  minutes -= breakMin;
+
+  if(minutes<0){
+
+    toast('Break is longer than the shift');
+
+    return;
+
+  }
+
+  state.entries[date] = {
+
+    start:start,
+    finish:finish,
+    break:breakMin,
+    duration:minutes*60000
+
+  };
+
+  if(
+    state.active &&
+    state.active.date===date
+  ){
+
+    state.active=null;
+
+  }
+
+  save();
+
+  render();
+
+  toast('Day saved');
+
+}
 
 function editEntry(key){
 
