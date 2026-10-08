@@ -5,139 +5,1175 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#111827">
 <title>WorkingHours</title>
+
 <style>
-:root{--bg:#0b1220;--card:#111827;--muted:#94a3b8;--text:#f8fafc;--accent:#22c55e;--danger:#ef4444;--line:#263244}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1220,#111827);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-main{max-width:620px;margin:auto;padding:22px 16px 36px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-h1{font-size:28px;margin:0}.sub{color:var(--muted);font-size:13px;margin-top:3px}
-.card{background:rgba(17,24,39,.96);border:1px solid var(--line);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 10px 30px rgba(0,0,0,.18)}
-.clock{text-align:center;font-size:52px;font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:1px;margin:8px 0}
-.status{text-align:center;color:var(--muted);margin-bottom:14px}.status.on{color:var(--accent)}
-button{border:0;border-radius:14px;padding:14px 16px;font-size:16px;font-weight:700;cursor:pointer}
-.primary{width:100%;background:var(--accent);color:#052e16}.stop{width:100%;background:var(--danger);color:white}
-.secondary{background:#1f2937;color:#fff;border:1px solid #334155}.row{display:flex;gap:10px}.row>*{flex:1}
-.section-title{font-size:18px;font-weight:700;margin-bottom:10px}
-input{width:100%;background:#0b1220;color:#fff;border:1px solid #334155;border-radius:11px;padding:10px;font-size:15px}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 5px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-weight:600}
-.right{text-align:right}.empty{color:var(--muted);text-align:center;padding:15px}
-.small{font-size:12px;color:var(--muted);line-height:1.45}
-.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#172033;color:#cbd5e1;font-size:12px}
-.danger{color:#fca5a5}.actions{display:flex;gap:7px;justify-content:flex-end}.iconbtn{padding:7px 10px;background:#1f2937;color:#fff;border:1px solid #334155;border-radius:9px}
-#toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#e2e8f0;color:#0f172a;padding:10px 15px;border-radius:10px;font-weight:600;display:none;z-index:5}
+:root{
+  --bg:#0b1220;
+  --card:#111827;
+  --muted:#94a3b8;
+  --text:#f8fafc;
+  --accent:#22c55e;
+  --danger:#ef4444;
+  --line:#263244;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:linear-gradient(180deg,#0b1220,#111827);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  min-height:100vh;
+}
+
+main{
+  max-width:620px;
+  margin:auto;
+  padding:22px 16px 36px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+h1{font-size:28px;margin:0}
+.sub{color:var(--muted);font-size:13px;margin-top:3px}
+
+.card{
+  background:rgba(17,24,39,.96);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px;
+  margin:12px 0;
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+}
+
+.clock{
+  text-align:center;
+  font-size:52px;
+  font-variant-numeric:tabular-nums;
+  font-weight:700;
+  letter-spacing:1px;
+  margin:8px 0;
+}
+
+.status{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:14px;
+}
+
+.status.on{color:var(--accent)}
+
+button{
+  border:0;
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.primary{
+  width:100%;
+  background:var(--accent);
+  color:#052e16;
+}
+
+.stop{
+  width:100%;
+  background:var(--danger);
+  color:white;
+}
+
+.secondary{
+  background:#1f2937;
+  color:#fff;
+  border:1px solid #334155;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+}
+
+.row>*{flex:1}
+
+.section-title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+input{
+  width:100%;
+  background:#0b1220;
+  color:#fff;
+  border:1px solid #334155;
+  border-radius:11px;
+  padding:10px;
+  font-size:15px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+
+th,td{
+  padding:10px 5px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+}
+
+th{
+  color:var(--muted);
+  font-weight:600;
+}
+
+.right{text-align:right}
+
+.empty{
+  color:var(--muted);
+  text-align:center;
+  padding:15px;
+}
+
+.small{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#172033;
+  color:#cbd5e1;
+  font-size:12px;
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  justify-content:flex-end;
+}
+
+.iconbtn{
+  padding:7px 10px;
+  background:#1f2937;
+  color:#fff;
+  border:1px solid #334155;
+  border-radius:9px;
+  font-size:13px;
+}
+
+.deletebtn{
+  background:#3b1820;
+  border-color:#6b202b;
+  color:#fecaca;
+}
+
+.summary-number{
+  font-size:20px;
+  font-weight:700;
+  margin-top:3px;
+}
+
+.overtime{
+  color:#fbbf24;
+}
+
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%);
+  background:#e2e8f0;
+  color:#0f172a;
+  padding:10px 15px;
+  border-radius:10px;
+  font-weight:600;
+  display:none;
+  z-index:5;
+}
 </style>
 </head>
+
 <body>
+
 <main>
+
   <div class="top">
-    <div><h1>WorkingHours</h1><div class="sub">Simple work-time tracker</div></div>
+    <div>
+      <h1>WorkingHours</h1>
+      <div class="sub">Work-time tracker</div>
+    </div>
     <span id="todayBadge" class="badge"></span>
   </div>
 
+  <!-- TIMER -->
   <div class="card">
     <div id="clock" class="clock">00:00:00</div>
     <div id="status" class="status">Not working</div>
-    <button id="startBtn" class="primary" onclick="startWork()">▶ START</button>
-    <button id="finishBtn" class="stop" style="display:none" onclick="finishWork()">■ FINISH</button>
+
+    <button id="startBtn"
+            class="primary"
+            onclick="startWork()">
+      ▶ START
+    </button>
+
+    <button id="finishBtn"
+            class="stop"
+            style="display:none"
+            onclick="finishWork()">
+      ■ FINISH
+    </button>
   </div>
 
+
+  <!-- TODAY -->
   <div class="card">
     <div class="section-title">Today's record</div>
+
     <div class="row">
-      <div><div class="small">Start</div><div id="todayStart">—</div></div>
-      <div><div class="small">Finish</div><div id="todayFinish">—</div></div>
-      <div><div class="small">Worked</div><div id="todayWorked">00:00</div></div>
+
+      <div>
+        <div class="small">Start</div>
+        <div id="todayStart">—</div>
+      </div>
+
+      <div>
+        <div class="small">Finish</div>
+        <div id="todayFinish">—</div>
+      </div>
+
+      <div>
+        <div class="small">Worked</div>
+        <div id="todayWorked">00:00</div>
+      </div>
+
     </div>
   </div>
 
+
+  <!-- WEEKLY SUMMARY -->
   <div class="card">
-    <div class="section-title">Daily data</div>
+
+    <div class="section-title">
+      Weekly summary
+    </div>
+
+    <div class="row">
+
+      <div>
+        <div class="small">Weekly target</div>
+        <input
+          id="weeklyTarget"
+          type="number"
+          min="1"
+          step="0.5"
+          value="40">
+      </div>
+
+      <div style="display:flex;align-items:end">
+        <button
+          class="secondary"
+          style="width:100%"
+          onclick="saveWeeklyTarget()">
+          Save
+        </button>
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-top:18px">
+
+      <div>
+        <div class="small">Worked</div>
+        <div id="weekWorked" class="summary-number">
+          00:00
+        </div>
+      </div>
+
+      <div>
+        <div class="small">Remaining</div>
+        <div id="weekRemaining" class="summary-number">
+          40:00
+        </div>
+      </div>
+
+      <div>
+        <div class="small">Overtime</div>
+        <div id="weekOvertime" class="summary-number overtime">
+          00:00
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      id="weekRange"
+      class="small"
+      style="margin-top:12px">
+    </div>
+
+  </div>
+
+
+  <!-- DAILY DATA -->
+  <div class="card">
+
+    <div class="section-title">
+      Daily data
+    </div>
+
     <div style="overflow:auto">
-      <table><thead><tr><th>Date</th><th>Start</th><th>Finish</th><th>Hours</th><th></th></tr></thead>
-      <tbody id="history"></tbody></table>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Start</th>
+            <th>Finish</th>
+            <th>Hours</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody id="history"></tbody>
+
+      </table>
+
     </div>
+
   </div>
 
+
+  <!-- BACKUP -->
   <div class="card">
-    <div class="section-title">Backup & data</div>
-    <div class="row">
-      <button class="secondary" onclick="exportData()">Export backup</button>
-      <button class="secondary" onclick="document.getElementById('importFile').click()">Import backup</button>
+
+    <div class="section-title">
+      Backup & data
     </div>
-    <input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)">
-    <p class="small">Your records are stored on this phone in the browser. Export a backup occasionally so your history can be restored if the browser/app is cleared.</p>
+
+    <div class="row">
+
+      <button
+        class="secondary"
+        onclick="exportData()">
+        Export backup
+      </button>
+
+      <button
+        class="secondary"
+        onclick="document.getElementById('importFile').click()">
+        Import backup
+      </button>
+
+    </div>
+
+    <input
+      id="importFile"
+      type="file"
+      accept=".json"
+      style="display:none"
+      onchange="importData(event)">
+
+    <p class="small">
+      Your records are stored on this phone in the browser.
+      Export a backup occasionally so your history can be restored.
+    </p>
+
   </div>
+
 </main>
+
 <div id="toast"></div>
 
-<script>
-const KEY='workingHours_v2';
-let state=JSON.parse(localStorage.getItem(KEY)||'null')||{entries:{},active:null};
 
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-function dateKey(d=new Date()){return d.toISOString().slice(0,10)}
-function fmtTime(ms){let s=Math.max(0,Math.floor(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;return [h,m,sec].map((x,i)=>i===0?String(x).padStart(2,'0'):String(x).padStart(2,'0')).join(':')}
-function fmtShort(ms){let s=Math.max(0,Math.floor(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60);return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`}
-function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',1800)}
+<script>
+
+const KEY = 'workingHours_v2';
+
+let state =
+  JSON.parse(localStorage.getItem(KEY) || 'null')
+  || {
+       entries:{},
+       active:null
+     };
+
+
+function save(){
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(state)
+  );
+}
+
+
+function dateKey(d=new Date()){
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+
+  return `${y}-${m}-${day}`;
+}
+
+
+function fmtTime(ms){
+
+  let s=Math.max(
+    0,
+    Math.floor(ms/1000)
+  );
+
+  let h=Math.floor(s/3600);
+
+  let m=Math.floor(
+    (s%3600)/60
+  );
+
+  let sec=s%60;
+
+  return [
+    h,m,sec
+  ].map(
+    x=>String(x).padStart(2,'0')
+  ).join(':');
+
+}
+
+
+function fmtShort(ms){
+
+  let s=Math.max(
+    0,
+    Math.floor(ms/1000)
+  );
+
+  let h=Math.floor(s/3600);
+
+  let m=Math.floor(
+    (s%3600)/60
+  );
+
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+
+}
+
+
+function toast(message){
+
+  const e=document.getElementById('toast');
+
+  e.textContent=message;
+
+  e.style.display='block';
+
+  setTimeout(
+    ()=>e.style.display='none',
+    1800
+  );
+
+}
+
+
+/* WEEKLY TARGET */
+
+function getWeeklyTarget(){
+
+  return Number(
+    localStorage.getItem(
+      'workingHours_weeklyTarget'
+    ) || 40
+  );
+
+}
+
+
+function saveWeeklyTarget(){
+
+  const value=Number(
+    document.getElementById(
+      'weeklyTarget'
+    ).value
+  );
+
+  if(!value || value<1){
+
+    toast('Invalid weekly target');
+
+    return;
+  }
+
+  localStorage.setItem(
+    'workingHours_weeklyTarget',
+    String(value)
+  );
+
+  render();
+
+  toast('Weekly target saved');
+
+}
+
+
+/* MONDAY = START OF WEEK */
+
+function weekStart(d=new Date()){
+
+  const x=new Date(d);
+
+  x.setHours(
+    0,0,0,0
+  );
+
+  const day=x.getDay();
+
+  x.setDate(
+    x.getDate() +
+    (day===0 ? -6 : 1-day)
+  );
+
+  return x;
+
+}
+
+
+/* WEEKLY CALCULATION */
+
+function weeklyStats(){
+
+  const start=weekStart(
+    new Date()
+  );
+
+  const end=new Date(start);
+
+  end.setDate(
+    start.getDate()+6
+  );
+
+  let total=0;
+
+  Object.entries(
+    state.entries
+  ).forEach(
+    ([key,entry])=>{
+
+      const d=new Date(
+        key+'T00:00:00'
+      );
+
+      if(
+        d>=start &&
+        d<=end
+      ){
+
+        total +=
+          Number(entry.duration) || 0;
+
+      }
+
+    }
+  );
+
+  const target=
+    getWeeklyTarget()*3600000;
+
+  return {
+
+    total:total,
+
+    target:target,
+
+    start:start,
+
+    end:end,
+
+    remaining:
+      Math.max(
+        0,
+        target-total
+      ),
+
+    overtime:
+      Math.max(
+        0,
+        total-target
+      )
+
+  };
+
+}
+
+
+/* DELETE */
+
+function deleteEntry(key){
+
+  if(!state.entries[key])
+    return;
+
+  const ok=confirm(
+    'Delete the working-time record for '+
+    key+
+    '?\n\nThis cannot be undone.'
+  );
+
+  if(!ok)
+    return;
+
+  delete state.entries[key];
+
+  if(
+    state.active &&
+    state.active.date===key
+  ){
+
+    state.active=null;
+
+  }
+
+  save();
+
+  render();
+
+  toast('Record deleted');
+
+}
+
+
+/* RENDER */
+
 function render(){
- const now=new Date(), key=dateKey(now);
- document.getElementById('todayBadge').textContent=key;
- const active=state.active;
- document.getElementById('startBtn').style.display=active?'none':'block';
- document.getElementById('finishBtn').style.display=active?'block':'none';
- document.getElementById('status').textContent=active?'Working now':'Not working';
- document.getElementById('status').className='status '+(active?'on':'');
- const e=state.entries[key]||{};
- document.getElementById('todayStart').textContent=e.start||'—';
- document.getElementById('todayFinish').textContent=e.finish||'—';
- let worked=e.duration||0;
- if(active) worked=Date.now()-active.startedAt;
- document.getElementById('todayWorked').textContent=fmtShort(worked);
- document.getElementById('clock').textContent=fmtTime(active?Date.now()-active.startedAt:worked);
- const rows=Object.keys(state.entries).sort().reverse();
- document.getElementById('history').innerHTML=rows.length?rows.map(k=>{
-   const x=state.entries[k];
-   return `<tr><td>${k}</td><td>${x.start||'—'}</td><td>${x.finish||'—'}</td><td>${fmtShort(x.duration||0)}</td><td class="right"><button class="iconbtn" onclick="editEntry('${k}')">Edit</button></td></tr>`;
- }).join(''):`<tr><td colspan="5" class="empty">No completed days yet</td></tr>`;
+
+  const now=new Date();
+
+  const key=dateKey(now);
+
+  document.getElementById(
+    'todayBadge'
+  ).textContent=key;
+
+
+  const active=state.active;
+
+
+  document.getElementById(
+    'startBtn'
+  ).style.display=
+    active ? 'none':'block';
+
+
+  document.getElementById(
+    'finishBtn'
+  ).style.display=
+    active ? 'block':'none';
+
+
+  document.getElementById(
+    'status'
+  ).textContent=
+    active
+      ? 'Working now'
+      : 'Not working';
+
+
+  document.getElementById(
+    'status'
+  ).className=
+    'status '+
+    (active?'on':'');
+
+
+  const today=
+    state.entries[key] || {};
+
+
+  document.getElementById(
+    'todayStart'
+  ).textContent=
+    today.start || '—';
+
+
+  document.getElementById(
+    'todayFinish'
+  ).textContent=
+    today.finish || '—';
+
+
+  let worked=
+    today.duration || 0;
+
+
+  if(active){
+
+    worked=
+      Date.now()-
+      active.startedAt;
+
+  }
+
+
+  document.getElementById(
+    'todayWorked'
+  ).textContent=
+    fmtShort(worked);
+
+
+  document.getElementById(
+    'clock'
+  ).textContent=
+    fmtTime(
+      active
+        ? Date.now()-active.startedAt
+        : worked
+    );
+
+
+  /* WEEK */
+
+  const ws=weeklyStats();
+
+  document.getElementById(
+    'weeklyTarget'
+  ).value=
+    getWeeklyTarget();
+
+
+  document.getElementById(
+    'weekWorked'
+  ).textContent=
+    fmtShort(ws.total);
+
+
+  document.getElementById(
+    'weekRemaining'
+  ).textContent=
+    fmtShort(ws.remaining);
+
+
+  document.getElementById(
+    'weekOvertime'
+  ).textContent=
+    fmtShort(ws.overtime);
+
+
+  document.getElementById(
+    'weekRange'
+  ).textContent=
+    'Monday '+
+    ws.start.toLocaleDateString()+
+    ' – Sunday '+
+    ws.end.toLocaleDateString();
+
+
+  /* HISTORY */
+
+  const rows=
+    Object.keys(
+      state.entries
+    )
+    .sort()
+    .reverse();
+
+
+  document.getElementById(
+    'history'
+  ).innerHTML=
+
+    rows.length
+
+      ?
+
+        rows.map(
+          key=>{
+
+            const e=
+              state.entries[key];
+
+            return `
+
+              <tr>
+
+                <td>${key}</td>
+
+                <td>
+                  ${e.start || '—'}
+                </td>
+
+                <td>
+                  ${e.finish || '—'}
+                </td>
+
+                <td>
+                  ${fmtShort(
+                    e.duration || 0
+                  )}
+                </td>
+
+                <td class="right">
+
+                  <div class="actions">
+
+                    <button
+                      class="iconbtn"
+                      onclick="editEntry('${key}')">
+                      Edit
+                    </button>
+
+                    <button
+                      class="iconbtn deletebtn"
+                      onclick="deleteEntry('${key}')">
+                      Delete
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            `;
+
+          }
+        ).join('')
+
+      :
+
+        `
+        <tr>
+          <td
+            colspan="5"
+            class="empty">
+            No completed days yet
+          </td>
+        </tr>
+        `;
+
 }
+
+
+/* START */
+
 function startWork(){
- if(state.active)return;
- const now=new Date(),key=dateKey(now);
- state.active={date:key,startedAt:Date.now()};
- state.entries[key]=state.entries[key]||{};
- state.entries[key].start=now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
- state.entries[key].finish='';
- state.entries[key].duration=0;
- save();render();toast('Work started');
+
+  if(state.active)
+    return;
+
+
+  const now=new Date();
+
+  const key=dateKey(now);
+
+
+  state.active={
+
+    date:key,
+
+    startedAt:Date.now()
+
+  };
+
+
+  state.entries[key]=
+    state.entries[key] || {};
+
+
+  state.entries[key].start=
+    now.toLocaleTimeString(
+      [],
+      {
+        hour:'2-digit',
+        minute:'2-digit'
+      }
+    );
+
+
+  state.entries[key].finish='';
+
+  state.entries[key].duration=0;
+
+
+  save();
+
+  render();
+
+  toast('Work started');
+
 }
+
+
+/* FINISH */
+
 function finishWork(){
- if(!state.active)return;
- const now=new Date(),key=state.active.date,e=state.entries[key]||{};
- e.finish=now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
- e.duration=Date.now()-state.active.startedAt;
- state.entries[key]=e;state.active=null;save();render();toast('Work saved');
+
+  if(!state.active)
+    return;
+
+
+  const now=new Date();
+
+  const key=
+    state.active.date;
+
+
+  const entry=
+    state.entries[key] || {};
+
+
+  entry.finish=
+    now.toLocaleTimeString(
+      [],
+      {
+        hour:'2-digit',
+        minute:'2-digit'
+      }
+    );
+
+
+  entry.duration=
+    Date.now()-
+    state.active.startedAt;
+
+
+  state.entries[key]=entry;
+
+  state.active=null;
+
+
+  save();
+
+  render();
+
+  toast('Work saved');
+
 }
-function editEntry(k){
- const e=state.entries[k]||{};
- const start=prompt('Start time (e.g. 05:00)',e.start||'');
- if(start===null)return;
- const finish=prompt('Finish time (e.g. 15:30)',e.finish||'');
- if(finish===null)return;
- const [sh,sm]=(start.match(/\\d+/g)||[]).map(Number), [fh,fm]=(finish.match(/\\d+/g)||[]).map(Number);
- if([sh,sm,fh,fm].some(Number.isNaN)||sh>23||fh>23||sm>59||fm>59){toast('Invalid time');return}
- let dur=(fh*60+fm)-(sh*60+sm);if(dur<0)dur+=1440;
- e.start=start;e.finish=finish;e.duration=dur*60000;state.entries[k]=e;save();render();toast('Record updated');
+
+
+/* EDIT */
+
+function editEntry(key){
+
+  const entry=
+    state.entries[key] || {};
+
+
+  const start=prompt(
+    'Start time (e.g. 05:00)',
+    entry.start || ''
+  );
+
+
+  if(start===null)
+    return;
+
+
+  const finish=prompt(
+    'Finish time (e.g. 15:30)',
+    entry.finish || ''
+  );
+
+
+  if(finish===null)
+    return;
+
+
+  const startParts=
+    (start.match(/\d+/g)||[])
+    .map(Number);
+
+
+  const finishParts=
+    (finish.match(/\d+/g)||[])
+    .map(Number);
+
+
+  if(
+    startParts.length<2 ||
+    finishParts.length<2
+  ){
+
+    toast('Invalid time');
+
+    return;
+
+  }
+
+
+  const sh=startParts[0];
+  const sm=startParts[1];
+
+  const fh=finishParts[0];
+  const fm=finishParts[1];
+
+
+  if(
+    sh>23 ||
+    fh>23 ||
+    sm>59 ||
+    fm>59
+  ){
+
+    toast('Invalid time');
+
+    return;
+
+  }
+
+
+  let minutes=
+    (fh*60+fm)-
+    (sh*60+sm);
+
+
+  if(minutes<0)
+    minutes+=1440;
+
+
+  entry.start=start;
+
+  entry.finish=finish;
+
+  entry.duration=
+    minutes*60000;
+
+
+  state.entries[key]=entry;
+
+
+  save();
+
+  render();
+
+  toast('Record updated');
+
 }
+
+
+/* EXPORT */
+
 function exportData(){
- const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='WorkingHours-backup.json';a.click();URL.revokeObjectURL(a.href);
+
+  const blob=
+    new Blob(
+      [
+        JSON.stringify(
+          state,
+          null,
+          2
+        )
+      ],
+      {
+        type:'application/json'
+      }
+    );
+
+
+  const url=
+    URL.createObjectURL(blob);
+
+
+  const a=
+    document.createElement('a');
+
+
+  a.href=url;
+
+  a.download=
+    'WorkingHours-backup.json';
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(url);
+
 }
-function importData(ev){
- const f=ev.target.files[0];if(!f)return;
- const r=new FileReader();r.onload=()=>{try{
-   const x=JSON.parse(r.result);if(!x.entries||typeof x.entries!=='object')throw 0;
-   state=x;save();render();toast('Backup restored');
- }catch(e){toast('Invalid backup file')} };r.readAsText(f);
+
+
+/* IMPORT */
+
+function importData(event){
+
+  const file=
+    event.target.files[0];
+
+
+  if(!file)
+    return;
+
+
+  const reader=
+    new FileReader();
+
+
+  reader.onload=()=>{
+
+    try{
+
+      const imported=
+        JSON.parse(
+          reader.result
+        );
+
+
+      if(
+        !imported.entries ||
+        typeof imported.entries!=='object'
+      ){
+
+        throw new Error();
+
+      }
+
+
+      state=imported;
+
+      save();
+
+      render();
+
+      toast('Backup restored');
+
+    }
+
+    catch(error){
+
+      toast(
+        'Invalid backup file'
+      );
+
+    }
+
+  };
+
+
+  reader.readAsText(file);
+
 }
-setInterval(render,1000);render();
+
+
+/* UPDATE EVERY SECOND */
+
+setInterval(
+  render,
+  1000
+);
+
+
+render();
+
 </script>
-</body></html>
+
+</body>
+</html>
